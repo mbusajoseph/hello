@@ -1,19 +1,29 @@
 <?php
 include 'DatabaseConnection.php';
-class Toursim_Sevices
+class Tourism
 {
   public function __construct()
   {
   }
-  public function get_services() {
+  public static function get_services() {
     $services = array();
     $connection = DatabaseConnection::dbConnect();
-    $sql = "SELECT * FROM park-orders";
+    $sql = "SELECT * FROM park_orders";
     $result = mysqli_query($connection, $sql);
     while($data = mysqli_fetch_assoc($result)){
       $services[] = $data;
     }
+    return $services;
   }
-  return $services;
+  public static function get_national_parks() {
+    $parks = array();
+    $connection = DatabaseConnection::dbConnect();
+    $sql = "SELECT * FROM national_parks";
+    $result = mysqli_query($connection, $sql);
+    while($data = mysqli_fetch_assoc($result)){
+      $parks[] = $data;
+    }
+    return $parks;
+
+  }
 }
-$services = new Toursim_Services();
