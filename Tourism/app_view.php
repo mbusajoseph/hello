@@ -1,3 +1,7 @@
 <?php
 include 'servicesController.php';
-$data = $services->get_services();
+//get the services orderd for
+$data = Tourism::get_services();
+
+//get the national parks
+$parks = Tourism::get_national_parks();
