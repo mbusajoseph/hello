@@ -1,17 +1,14 @@
-  
-<php?
-include 'app_view.php';
-?>
-
+<?php include 'app_view.php' ?>
 <!DOCTYPE html>
 <html> 
     <head>  
     <link rel="icon" href="" size="16x16" type=""/>
         <title>Home</title>  
-        <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-<!--        <link rel="stylesheet" type="text/css" href="style.css">-->
-       <link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css">
-        <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">-->
+       <!-- <link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css">
+        <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <style type="text/css">
              body{
                 background-image: url("");
@@ -41,9 +38,9 @@ include 'app_view.php';
               <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">NATIONAL_PARKS</a>
                 <div class="dropdown-menu">
-                   
-                    <a href="#" class="dropdown-item"></a>
-                   
+                   <?php foreach ($parks as $park): ?>
+                    <a href="#" class="dropdown-item"><?= $park['name'] ?></a>
+                   <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -66,19 +63,37 @@ include 'app_view.php';
     </div>
 </nav>
 <main class="container-fluid">
-    <div class="row mt-2">
-        
-        <div class="col-md-12 col-lg-4 col-xl-4">
-            <div class="card shadow mt-3">
-                <div class="card-body">
-                <h5 class="font-weight-bold">TOURISM SERVICES </h5>  
-                 <h5 class="text-muted">CUSTOMER ID:<?php echo $data['id']; ?> </h5>
-                <h5 class="text-muted">TELPHONE:<?php echo $data['phone_number']; ?> </h5>
-                <h5 class="text-muted">STATUS:<?php echo $data['status']; ?></h5>
-             <h5 class="text-muted">DATE_ORDERED:<?php echo $data['date_ordered']; ?> </h5>
-               
-
-                
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="card mt-3">
+                <div class="card-header py-1">
+                <h5 class="font-weight-bold">TOURISM SERVICES </h5>
+                </div>
+                    <div class="card-body">
+                        <div class="row">
+                        <?php foreach ($data as $value): ?>
+                            <div class="col-md-12 col-lg-4 col-xl-4">
+                                <div class="card card-body shadow mt-2">  
+                                 <div class="row justify-content-between">
+                                    <h5 class="text-muted">CUSTOMER ID: </h5>
+                                    <span class="text-success"><?=$value['id']; ?> </span>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <h5 class="text-muted">TELPHONE: </h5>
+                                         <span class="text-success"><?=$value['phone_number']; ?> </span>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                         <h5 class="text-muted">STATUS: </h5>
+                                         <span class="text-success"><?=$value['status']; ?> </span>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                            <h5 class="text-muted">DATE_ORDERED: </h5>
+                                            <span class="text-success"><?= $value['date_ordered'];?> </span>
+                                    </div>
+                                </div>
+                            </div>   
+                        <?php endforeach ?>         
+                </div>
                 </div>
             </div>
         </div>
@@ -86,7 +101,9 @@ include 'app_view.php';
     </div>
 </main>
  
-       
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body> 
     </body> 
 </html>
-
