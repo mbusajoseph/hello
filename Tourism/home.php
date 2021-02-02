@@ -3,7 +3,7 @@
 <html> 
     <head>  
     <link rel="icon" href="" size="16x16" type=""/>
-        <title>Home</title>  
+        <title>Dashboard | TOURISM CENTER</title>  
         <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">-->
        <!-- <link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css">
@@ -28,7 +28,7 @@
         <div class="navbar-nav">
             <a href="#" class="nav-item nav-link active"></a>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">HOME</a>
+                <a href="./" class="nav-link dropdown-toggle" data-toggle="dropdown">HOME</a>
                 <div class="dropdown-menu">
                    
                     <a href="#" class="dropdown-item"></a>
@@ -76,7 +76,7 @@
                                 <div class="card card-body shadow mt-2">  
                                  <div class="row justify-content-between">
                                     <h5 class="text-muted">CUSTOMER ID: </h5>
-                                    <span class="text-success"><?=$value['id']; ?> </span>
+                                    <span class="text-success"><?=$value['package_id']; ?> </span>
                                     </div>
                                     <div class="row justify-content-between">
                                         <h5 class="text-muted">TELPHONE: </h5>
@@ -90,6 +90,37 @@
                                             <h5 class="text-muted">DATE_ORDERED: </h5>
                                             <span class="text-success"><?= $value['date_ordered'];?> </span>
                                     </div>
+                                    <div class="row justify-content-between">
+                                            <h5 class="text-muted">ACTION: </h5>
+                                            <form action="" method="get">
+                                             <input type="hidden" name="approve" value="true"/>
+                                             <input type="hidden" name="order" value="<?= $value['id'] ?>"/>
+                                             <button type="submit"  class="btn btn-success btn-sm" onclick="return confirm('Approve this order?')">Approve</button>   
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>   
+                        <?php endforeach ?>         
+                </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header py-1">
+                <h5 class="font-weight-bold">TOURISM PACKAGES</h5>
+                </div>
+                    <div class="card-body">
+                        <div class="row">
+                        <?php foreach ($packages as $value): ?>
+                            <div class="col-md-12 col-lg-4 col-xl-4">
+                                <div class="card card-body shadow mt-2">  
+                                 <div class="row justify-content-between">
+                                    <h5 class="text-muted">PACKAGE NAME: </h5>
+                                    <span class="text-success"><?=$value['name']; ?> </span>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <h5 class="text-muted">COST: </h5>
+                                         <span class="text-success"><?=$value['price']; ?> </span>
+                                    </div>
                                 </div>
                             </div>   
                         <?php endforeach ?>         
@@ -98,6 +129,9 @@
             </div>
         </div>
        
+    </div>
+    <div class="fixed-bottom w-50">
+        <?= $response ?>
     </div>
 </main>
  
