@@ -12,3 +12,7 @@ $response = "";
 if (isset($_REQUEST['approve'])) {
     $response = Tourism::approve_order();
 }
+//cancle approval
+if (isset($_REQUEST['cancel'])) {
+    $response = Tourism::cancel_approval();
+}
