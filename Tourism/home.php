@@ -92,11 +92,22 @@
                                     </div>
                                     <div class="row justify-content-between">
                                             <h5 class="text-muted">ACTION: </h5>
+
+                                            <?php if($value['status'] == 'pending'): ?>
                                             <form action="" method="get">
                                              <input type="hidden" name="approve" value="true"/>
                                              <input type="hidden" name="order" value="<?= $value['id'] ?>"/>
                                              <button type="submit"  class="btn btn-success btn-sm" onclick="return confirm('Approve this order?')">Approve</button>   
                                             </form>
+                                            <?php  endif ?>
+
+                                            <?php if($value['status'] == 'approved'): ?>
+                                            <form action="" method="get">
+                                             <input type="hidden" name="cancel" value="true"/>
+                                             <input type="hidden" name="order" value="<?= $value['id'] ?>"/>
+                                             <button type="submit"  class="btn btn-success btn-sm" onclick="return confirm('Cancel Approval for this order?')">Cancel Approval</button>   
+                                            </form>
+                                            <?php  endif ?>
                                     </div>
                                 </div>
                             </div>   
@@ -130,7 +141,7 @@
         </div>
        
     </div>
-    <div class="fixed-bottom w-50">
+    <div class="fixed-bottom w-50" id="response">
         <?= $response ?>
     </div>
 </main>
@@ -138,6 +149,34 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        function approve() {
+            let el = document.getElementById('approve');
+            let orderId = el.getAttribute('data-approve');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'servicesController.php');
+            xhr.setRequestHeader("Content-type", 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if(this.readyState === 4 && this.status === 200) {
+                    document.getElementById('response').innerHTML = this.responseText;
+                }
+            }
+            xhr.send("approve=true&order="+orderId);
+        }
+        function cancelApproval() {
+            let el = document.getElementById('approve');
+            let orderId = el.getAttribute('data-approve');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'servicesController.php');
+            xhr.setRequestHeader("Content-type", 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if(this.readyState === 4 && this.status === 200) {
+                    document.getElementById('response').innerHTML = this.responseText;
+                }
+            }
+            xhr.send("cancel=true&order="+orderId);
+        }
+    </script>
 </body> 
     </body> 
 </html>
