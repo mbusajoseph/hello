@@ -59,7 +59,7 @@ class Tourism
     return $packages;
 
   }
-  private static function failure(string $message = 'Oops, something when wrong, please try again later.') {
+  private static function failure(string $message = 'Oops, something went wrong, please try again later.') {
     return '<div class="alert alert-warning alert-dismissible fade show">
     <strong>Failure! </strong>'. $message.'
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -77,10 +77,50 @@ class Tourism
     $sql = "UPDATE park_orders SET `status` = 'approved' WHERE id = $order";
     mysqli_query($connection, $sql);
     if (mysqli_affected_rows($connection) > 0) {
-      return self::success('Order approved successfully');
+      return self::success("Order approved successfully <a href='javascript:void(0)' class='btn btn-primary btn-sm' onclick='cancelApproval()' data-approve='$order' id='approve'>undo </a>");
+    }else {
+      return self::failure();
+    }
+  }
+  public static function cancel_approval() {
+    $connection = DatabaseConnection::dbConnect();
+    $order =  self::get('order');
+    $sql = "UPDATE park_orders SET `status` = 'pending' WHERE id = $order";
+    mysqli_query($connection, $sql);
+    if (mysqli_affected_rows($connection) > 0) {
+      return self::success("Order's approval cancelled successfully <a href='javascript:void(0)' class='btn btn-primary btn-sm' onclick='approve()' data-approve='$order' id='approve'>undo </a> ");
+    }else {
+      return self::failure();
+    }
+  }
+  public static function undo_approval() {
+    $connection = DatabaseConnection::dbConnect();
+    $order =  self::post('order');
+    $sql = "UPDATE park_orders SET `status` = 'approved' WHERE id = $order";
+    mysqli_query($connection, $sql);
+    if (mysqli_affected_rows($connection) > 0) {
+      return self::success("Action undone successfully");
+    }else {
+      return self::failure();
+    }
+  }
+  public static function undo_cancel_approval() {
+    $connection = DatabaseConnection::dbConnect();
+    $order =  self::post('order');
+    $sql = "UPDATE park_orders SET `status` = 'pending' WHERE id = $order";
+    mysqli_query($connection, $sql);
+    if (mysqli_affected_rows($connection) > 0) {
+      return self::success("Action undone successfully");
     }else {
       return self::failure();
     }
   }
 }
-
+//undo order approval action
+if (isset($_POST['approve'])) {
+  echo Tourism::undo_approval();
+}
+//undo cancle approval action
+if(isset($_POST['cancel'])) {
+  echo Tourism::undo_cancel_approval();
+}
