@@ -1,0 +1,19 @@
+body{
+    background-image: url("");
+     background-repeat: round;
+background-attachment: fixed;
+}
+.b-link:hover{
+    text-decoration: none;
+}
+.edit-input{
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-color:  #008000;
+}
+.edit-input:focus{
+    outline: none;
+    outline-color: #20b2aa;
+    border-color: #20b2aa;
+}
