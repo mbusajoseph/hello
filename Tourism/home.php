@@ -9,31 +9,24 @@
        <!-- <link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css">
         <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script> -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <style type="text/css">
-             body{
-                background-image: url("");
-                 background-repeat: round;
-        background-attachment: fixed;
-            }
-        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="css/style.css">
     </head> 
     <body>  
        <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a href="#" class="navbar-brand">TOURISM CENTER</a>
+    <a href="dashboard.php" class="navbar-brand">TOURISM CENTER</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
         <div class="navbar-nav">
-            <a href="#" class="nav-item nav-link active"></a>
+        <a href="#" class="nav-item nav-link active"></a>
+            <a href="./dashboard.php" class="nav-item nav-link">HOME</a>
+                <a href="#package" class="nav-item nav-link" data-toggle="modal" data-target="#package">Add Package</a>
+                <a href="#user" class="nav-item nav-link" data-toggle="modal" data-target="#user">Create User</a>
             <div class="nav-item dropdown">
-                <a href="./" class="nav-link dropdown-toggle" data-toggle="dropdown">HOME</a>
-                <div class="dropdown-menu">
-                   
-                    <a href="#" class="dropdown-item"></a>
-                   
-                </div>
+            <a href="#" class="nav-item nav-link">All Package <span class="badge badge-dark"><?=$num_packs?></span> </a>
             </div>
               <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">NATIONAL_PARKS</a>
@@ -54,11 +47,9 @@
         </form>
         <div class="navbar-nav">
            <a href="javascript:void(0)" class="nav-item nav-link">      
-       <strong class="text-primary"><i class="fas fa-user"></i> Hi, 
+       <strong class="text-primary"><i class="fas fa-user"></i> Hi, <?= $username?>
      </strong>
- 
-    
-            <a href="index.php?logout='1'" class="nav-item nav-link">Logout</a>
+            <a href="auth.php?logout='1'" class="nav-item nav-link" onclick="return confirm('Logout?')">Logout</a>
         </div>
     </div>
 </nav>
@@ -130,7 +121,13 @@
                                     </div>
                                     <div class="row justify-content-between">
                                         <h5 class="text-muted">COST: </h5>
-                                         <span class="text-success"><?=$value['price']; ?> </span>
+                                         <span class="text-success"><?=number_format($value['price']) ?> </span>
+
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <h5 class="text-muted">ACTION: </h5>
+                                         <a href="action-center?action=edit&package=<?=$value['id']; ?> " class="b-link stretched-link"><i class="fas fa-edit"></i> </a>
+                                         
                                     </div>
                                 </div>
                             </div>   
@@ -141,6 +138,72 @@
         </div>
        
     </div>
+    <!-- Add packages model -->
+    <div id="package" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ADD PACKAGE</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="addPackageForm">
+                        <input type="hidden" name="action" value="add"/>
+                        <div class="form-group">
+                            <label for="packageName">Package Name</label>
+                            <input type="text" name="packageName" class="form-control" autocomplete="off" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="packagePrice">Package Price</label>
+                            <input type="number" name="packagePrice" class="form-control" autocomplete="off" required/>
+                        </div>
+                        <div class="row justify-content-center before-3 d-none">
+                            <span class="spinner-border spinner-border-sm text-success"></span>saving...
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="save-package-btn" class="btn btn-primary">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Add User model -->
+        <div id="user" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">CREATE A USER (ADMIN)</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="createUserForm">
+                        <input type="hidden" name="account" value="add"/>
+                        <div class="form-group">
+                            <label for="user">UserName</label>
+                            <input type="text" name="username" class="form-control" autocomplete="off" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" autocomplete="off" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2">Confirm Password</label>
+                            <input type="password" name="password2" class="form-control" autocomplete="off" required/>
+                        </div>
+                        <div class="row justify-content-center before-4 d-none">
+                            <span class="spinner-border spinner-border-sm text-success"></span>creating...
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel Operation</button>
+                    <button type="button" id="create-user-btn" class="btn btn-primary btn-sm">Create User</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="fixed-bottom w-50" id="response">
         <?= $response ?>
     </div>
@@ -149,34 +212,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        function approve() {
-            let el = document.getElementById('approve');
-            let orderId = el.getAttribute('data-approve');
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'servicesController.php');
-            xhr.setRequestHeader("Content-type", 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if(this.readyState === 4 && this.status === 200) {
-                    document.getElementById('response').innerHTML = this.responseText;
-                }
-            }
-            xhr.send("approve=true&order="+orderId);
-        }
-        function cancelApproval() {
-            let el = document.getElementById('approve');
-            let orderId = el.getAttribute('data-approve');
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'servicesController.php');
-            xhr.setRequestHeader("Content-type", 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if(this.readyState === 4 && this.status === 200) {
-                    document.getElementById('response').innerHTML = this.responseText;
-                }
-            }
-            xhr.send("cancel=true&order="+orderId);
-        }
-    </script>
+    <script src="js/tourism.js"></script>
 </body> 
     </body> 
 </html>
