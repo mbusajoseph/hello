@@ -14,7 +14,7 @@
     </head> 
     <body>  
        <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a href="#" class="navbar-brand">TOURISM CENTER</a>
+    <a href="dahsboard.php" class="navbar-brand">TOURISM CENTER</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
         <div class="navbar-nav">
             <a href="#" class="nav-item nav-link active"></a>
-            <a href="./" class="nav-item nav-link">HOME</a>
+            <a href="./dashboard.php" class="nav-item nav-link">HOME</a>
                 <a href="#package" class="nav-item nav-link">Add Package</a>
             <div class="nav-item dropdown">
             <a href="#" class="nav-item nav-link">All Package <span class="badge badge-dark"><?=$num_packs?></span> </a>
